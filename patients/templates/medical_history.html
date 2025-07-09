@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Medical History</title>
+</head>
+<body>
+  <h2>Medical History Form</h2>
+  <form method="post">
+    {% csrf_token %}
+    <label>Patient Name:</label><br>
+    <input type="text" name="patient_name" required><br><br>
+
+    <label>Diagnoses:</label><br>
+    <textarea name="diagnoses" required></textarea><br><br>
+
+    <label>Medications:</label><br>
+    <textarea name="medications"></textarea><br><br>
+
+    <label>Allergies:</label><br>
+    <textarea name="allergies"></textarea><br><br>
+
+    <label>Treatment History:</label><br>
+    <textarea name="treatment_history"></textarea><br><br>
+
+    <button type="submit">Save</button>
+  </form>
+
+  <hr>
+  <h3>Saved Histories:</h3>
+  <ul>
+    {% for h in histories %}
+      <li>
+        <strong>{{ h.patient_name }}</strong> - {{ h.diagnoses }} ({{ h.date_recorded|default:"" }})
+        <br>Medications: {{ h.medications }}
+        <br>Allergies: {{ h.allergies }}
+        <br>Treatment: {{ h.treatment_history }}
+      </li>
+    {% empty %}
+      <p>No records yet.</p>
+    {% endfor %}
+  </ul>
+</body>
+</html>

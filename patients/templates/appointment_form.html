@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Appointment</title>
+  <style>
+    .hidden { display: none; }
+    select, input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0 12px;
+    }
+    label { font-weight: bold; }
+    form { max-width: 500px; margin: auto; }
+  </style>
+</head>
+<body>
+  <h2>Book Appointment</h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <label>Patient Name:</label>
+    <input type="text" name="patient_name" required />
+
+    <label>Contact:</label>
+    <input type="text" name="patient_contact" required />
+
+    <!-- Doctor Button -->
+    <label>Doctor:</label><br />
+    <button type="button" onclick="showDoctorDropdown()">Select Doctor</button><br /><br />
+
+    <!-- Doctor Dropdown Hidden Initially -->
+    <div id="doctor-dropdown" class="hidden">
+      <select name="doctor" required>
+        <option value="">-- Select Doctor --</option>
+        {% for doctor in doctors %}
+          <option value="{{ doctor.id }}">{{ doctor.name }} - {{ doctor.specialty }}</option>
+        {% endfor %}
+      </select><br />
+    </div>
+
+    <label>Date:</label>
+    <input type="date" name="date" required />
+
+    <label>Time:</label>
+    <input type="time" name="time" required />
+
+    <label>Reason:</label>
+    <textarea name="reason" required></textarea>
+
+    <button type="submit">Book Appointment</button>
+  </form>
+
+  <script>
+    function showDoctorDropdown() {
+      document.getElementById("doctor-dropdown").style.display = "block";
+    }
+  </script>
+</body>
+</html>
